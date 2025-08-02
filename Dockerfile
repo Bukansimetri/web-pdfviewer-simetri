@@ -14,7 +14,9 @@ RUN apt-get update && apt-get install -y \
     zip unzip curl git nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
-        pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
+    && docker-php-ext-install intl
+    pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
+
 
 # Salin composer dari image resmi
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -26,7 +28,13 @@ WORKDIR /var/www
 COPY . .
 
 # Install dependency backend Laravel
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction
+
+CMD php artisan key:generate \
+ && php artisan storage:link \
+ && php artisan project:init \
+ && php artisan project:update
 
 # Install dependency frontend (Vite) dan build asset
 RUN npm install && npm run build
@@ -35,8 +43,7 @@ RUN npm install && npm run build
 RUN php artisan config:clear \
  && php artisan view:clear \
  && php artisan optimize:clear \
- && php artisan permission:cache-reset || true \
- && php artisan storage:link || true
+ && php artisan permission:cache-reset || true
 
 # Buat direktori yang dibutuhkan Livewire dan set permission
 RUN mkdir -p storage/framework/livewire-tmp \
@@ -50,7 +57,4 @@ RUN echo "upload_max_filesize=10M\npost_max_size=12M" > /usr/local/etc/php/conf.
 EXPOSE 8000
 
 # Jalankan Laravel: key, migrate, storage link, lalu serve
-CMD php artisan key:generate \
- && php artisan migrate --force \
- && php artisan storage:link \
- && php artisan serve --host=0.0.0.0 --port=8000
+CMD php artisan serve --host=0.0.0.0 --port=8000
