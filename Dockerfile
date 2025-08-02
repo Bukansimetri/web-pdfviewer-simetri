@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     zip unzip curl git nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install intl pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+    && docker-php-ext-install -j$(nproc) intl pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Copy Composer dari image resmi
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -28,17 +28,11 @@ COPY . .
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction
 
-
+# Generate APP_KEY dan storage link, serta perintah init project
 CMD php artisan key:generate \
  && php artisan storage:link \
  && php artisan project:init \
  && php artisan project:update
-
-# Generate APP_KEY dan storage link, serta perintah init project
-RUN php artisan key:generate \
- && php artisan storage:link \
- && php artisan migrate --force || true \
- && php artisan permission:cache-reset || true
 
 # Build frontend (Vite)
 RUN npm install && npm run build
