@@ -1,7 +1,7 @@
 # Gunakan image PHP 8.2 FPM
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
-# Install dependensi sistem dan PHP ekstensi
+# Install dependensi sistem yang dibutuhkan
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     zip unzip curl git nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) intl pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+    && docker-php-ext-install \
+        pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
 
 # Copy Composer dari image resmi
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
