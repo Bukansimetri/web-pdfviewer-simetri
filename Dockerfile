@@ -41,7 +41,8 @@ RUN npm install && npm run build
 # Bersihkan cache
 RUN php artisan config:clear \
  && php artisan view:clear \
- && php artisan optimize:clear
+ && php artisan cache:clear \
+ && (php artisan optimize:clear || true)
 
 # Buat direktori Livewire dan atur permission
 RUN mkdir -p storage/framework/livewire-tmp \
