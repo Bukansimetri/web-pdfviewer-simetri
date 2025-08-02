@@ -9,22 +9,20 @@ services:
     startCommand: ""
     envVars:
       - key: APP_ENV
-        value: production
+        value: local
       - key: APP_DEBUG
-        value: false
+        value: true
       - key: APP_KEY
         generateValue: true
       - key: DB_CONNECTION
-        value: mysql
+        value: mariadb
       - key: DB_HOST
-        value: mysql-2a73b0cd-epasditkapel-try.d.aivencloud.com
+        value: z8vpra.h.filess.io
       - key: DB_PORT
-        value: 22989
+        value: 61000
       - key: DB_DATABASE
-        value: defaultdb
+        value: epas_oncechoice
       - key: DB_USERNAME
-        value: avnadmin
+        value: epas_oncechoice
       - key: DB_PASSWORD
-        value: AVNS_Bw2UI5W_luHdht4rWqM
-      - key: MYSQL_ATTR_SSL_CA
-        value: /etc/ssl/certs/ca-certificates.crt
+        value: ec9af42aafc79b74c2571ddfe9f06921b56758c5
