@@ -55,5 +55,8 @@ EXPOSE 8000
 # Jalankan Laravel + Shield + Seeder + Serve
 CMD php artisan key:generate && \
     php artisan storage:link && \
+    php artisan config:clear && \
+    php artisan route:clear && \
+    php artisan view:clear && \
     php artisan optimize:clear && \
     php artisan serve --host=0.0.0.0 --port=8000
