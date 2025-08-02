@@ -29,7 +29,7 @@ class DocumentResource extends Resource
                 ->default(fn () => Str::uuid()->toString()),
             FileUpload::make('file_path')
                 ->label('Upload Dokumen (PDF)')
-                ->disk('local')
+                ->disk('public')
                 ->directory('files')
                 ->visibility('public')
                 ->required()

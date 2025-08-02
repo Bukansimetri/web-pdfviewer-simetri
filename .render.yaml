@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: laravel-filament-app
+    env: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://your-subdomain.onrender.com
+      - key: APP_KEY
+        generateValue: true
+
+      # Database (Aiven)
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        value: mysql-2a73b0cd-epasditkapel-try.d.aivencloud.com
+      - key: DB_PORT
+        value: 22989
+      - key: DB_DATABASE
+        value: defaultdb
+      - key: DB_USERNAME
+        value: avnadmin
+      - key: DB_PASSWORD
+        value: AVNS_Bw2UI5W_luHdht4rWqM
+
+      # SSL untuk MySQL Aiven
+      - key: MYSQL_ATTR_SSL_CA
+        value: /etc/ssl/certs/ca-certificates.crt
