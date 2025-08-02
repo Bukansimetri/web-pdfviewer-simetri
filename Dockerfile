@@ -39,10 +39,12 @@ RUN php artisan config:clear \
  && php artisan cache:clear \
  && (php artisan optimize:clear || true)
 
-# Siapkan direktori Livewire & permission
+ # Buat direktori Livewire dan public file folder, set permission
 RUN mkdir -p storage/framework/livewire-tmp \
- && chmod -R 775 storage bootstrap/cache \
- && chown -R www-data:www-data storage bootstrap/cache
+ && mkdir -p storage/public/files \
+ && chmod -R 775 storage bootstrap/cache storage/public/files \
+ && chown -R www-data:www-data storage bootstrap/cache storage/public/files
+
 
 # Atur limit upload file
 RUN echo "upload_max_filesize=10M\npost_max_size=12M" > /usr/local/etc/php/conf.d/uploads.ini

@@ -54,7 +54,7 @@ class DocumentResource extends Resource
                 ViewColumn::make('QR')
                     ->view('filament.tables.columns.qr-code')
                     ->state(function ($record) {
-                        return url("/files/{$record->slug}.pdf");
+                        return url("storage/files/{$record->slug}.pdf");
                     }),
             ])
             ->filters([
