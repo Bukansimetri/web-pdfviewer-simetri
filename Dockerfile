@@ -52,9 +52,6 @@ EXPOSE 8000
 
 # Jalankan Laravel + Shield + Seeder + Serve
 CMD php artisan key:generate && \
-    php artisan migrate:fresh --force && \
-    php artisan shield:generate -a -p=admin && \
-    php artisan db:seed --force && \
     php artisan storage:link && \
     php artisan optimize:clear && \
     php artisan serve --host=0.0.0.0 --port=8000
