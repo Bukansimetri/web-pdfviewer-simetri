@@ -14,9 +14,7 @@ RUN apt-get update && apt-get install -y \
     zip unzip curl git nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
-    && docker-php-ext-install intl \
-        pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
-
+        intl pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Salin composer dari image resmi
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
